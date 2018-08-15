@@ -1,0 +1,9 @@
+{
+  "name": "discord-bot-seed",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:lt37/discord-bot-seed.git",
+  "author": "Lois Tonnet",
+  "license": "MIT",
+  "private": false
+}
