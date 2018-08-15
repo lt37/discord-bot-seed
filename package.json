@@ -5,5 +5,8 @@
   "repository": "git@github.com:lt37/discord-bot-seed.git",
   "author": "Lois Tonnet",
   "license": "MIT",
-  "private": false
+  "private": false,
+  "dependencies": {
+    "discord.js": "^11.4.2"
+  }
 }
