@@ -6,10 +6,17 @@
   "author": "Lois Tonnet",
   "license": "MIT",
   "private": false,
+  "scripts": {
+    "lint:commit": "commitlint -f -t",
+    "commitmsg": "commitlint -E GIT_PARAMS"
+  },
   "dependencies": {
     "discord.js": "^11.4.2"
   },
   "devDependencies": {
-    "eslint": "^5.3.0"
+    "@commitlint/cli": "^7.0.0",
+    "@commitlint/config-conventional": "^7.0.1",
+    "eslint": "^5.3.0",
+    "husky": "^0.14.3"
   }
 }
