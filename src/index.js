@@ -29,6 +29,22 @@ client.on('message', message => {
 
   const command = client.commands.get(commandName);
 
+  // Checks if the command is server-only
+  if (command.guildOnly && message.channel.type !== 'text') {
+    return message.reply('This command cannot be used in a private message!');
+  }
+
+  // Checks that the command was given proper arguments.
+  if (command.args && !args.length) {
+    let reply = `Some arguments are missing, ${message.author}!`;
+
+    if (command.usage) {
+      reply += `\nUsage: \`${prefix}${command.name} ${command.usage}\``;
+    }
+
+    return message.channel.send(reply);
+  }
+
   command.execute(message, args);
 });
 
