@@ -11,6 +11,8 @@ const prefix = env.prefix;
 client.commands = new Discord.Collection();
 addCommands('src/commands');
 
+const cooldowns = new Discord.Collection();
+
 client.on('ready', () => {
   console.log('Client is ready!');
 });
@@ -45,7 +47,44 @@ client.on('message', message => {
     return message.channel.send(reply);
   }
 
+  // Handles cooldowns
+  // TODO: This part needs some serious documenting & refactoring.
+  if (!cooldowns.has(command.name)) {
+    cooldowns.set(command.name, new Discord.Collection());
+  }
+
+  const now = Date.now();
+  const cooldownAmount = (command.cooldown || env.defaultCooldown) * 1000;
+
+  const timestamps = cooldowns.get(command.name);
+
+  if (!timestamps.has(message.author.id)) {
+    timestamps.set(message.author.id, now);
+    setTimeout(() => timestamps.delete(message.author.id), cooldownAmount);
+  }
+
+  else {
+    const expirationTime = timestamps.get(message.author.id) + cooldownAmount;
+
+    if (now < expirationTime) {
+      const timeLeft = (expirationTime - now) / 1000;
+      return message.reply(`Please wait ${timeLeft.toFixed(1)} seconds before reusing the \`${command.name}\` command.`);
+    }
+
+    timestamps.set(message.author.id, now);
+    setTimeout(() => timestamps.delete(message.author.id), cooldownAmount);
+  }
+
+
+  // This part actually runs the command.
+  try {
+    command.execute(message, args);
+  } catch (error) {
+    console.error(error);
+    message.reply(`An error occurred when running the \`${command.name}\` command.`);
+  }
   command.execute(message, args);
+
 });
 
 client.login(secrets.token);
