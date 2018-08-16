@@ -8,7 +8,6 @@
     "ecmaVersion": 2017
   },
   "rules": {
-    "brace-style": ["error", "stroustrup", { "allowSingleLine": true }],
     "comma-spacing": "error",
     "comma-style": "error",
     "curly": ["error", "multi-line", "consistent"],
@@ -28,6 +27,7 @@
     "no-shadow": ["error", { "allow": ["err", "resolve", "reject"] }],
     "no-trailing-spaces": ["error"],
     "no-var": "error",
+    "no-unused-vars": "off",
     "object-curly-spacing": ["error", "always"],
     "prefer-const": "error",
     "quotes": ["error", "single"],

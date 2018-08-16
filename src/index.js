@@ -1,6 +1,9 @@
 const fs = require('fs');
 const Discord = require('discord.js');
 const env = require('../config.json');
+
+// This file contains 'secret' things, such as the bot's token.
+// For obvious reasons, I am not sharing it, and neither should you. It IS in the .gitignore file :)
 const secrets = require('../secrets.json');
 
 const client = new Discord.Client();
@@ -83,7 +86,6 @@ client.on('message', message => {
     console.error(error);
     message.reply(`An error occurred when running the \`${command.name}\` command.`);
   }
-  command.execute(message, args);
 
 });
 
@@ -93,6 +95,6 @@ function addCommands(folderPath) {
   const commandFiles = fs.readdirSync(folderPath);
   for (const file of commandFiles) {
     const command = require(`./commands/${file}`);
-    client.commands.set(command.name, command);
+    client.commands.set(command.name.toLowerCase(), command);
   }
 }
